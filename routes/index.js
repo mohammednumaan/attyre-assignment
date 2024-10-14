@@ -1,7 +1,11 @@
-var express = require('express');
-var router = express.Router();
+// imports
+const express = require('express');
 
-/* GET home page. */
+// intializing a router object to handle 
+// simila routes in the application
+const router = express.Router();
+
+// a simple get endpoint to render the index route
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });

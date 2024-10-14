@@ -13,7 +13,7 @@ const VideoSchema = new mongoose.Schema({
     created_at: { type: Date, default: Date.now },
 
     user: { type: Schema.Types.Number, ref: "User"},
-    products: { type: Schema.Types.Number, ref: "Product"},
+    products: [{ type: Schema.Types.Number, ref: "Product"}],
 
     likes_count: { type: Number, default: 0 },
     comments_count: { type: Number, default: 0 },
@@ -21,7 +21,7 @@ const VideoSchema = new mongoose.Schema({
     is_liked: { type: Boolean, default: false },
     is_bookmarked: { type: Boolean, default: false },
     music: { type: Schema.Types.Number, ref: "Music"},
-    hashtags: [{ type: Schema.Types.Number, ref: "Tags"}],
+    hashtags: [{ type: Schema.Types.Number, ref: "Tag"}],
 });
 
 module.exports = mongoose.model("Video", VideoSchema);

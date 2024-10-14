@@ -1,10 +1,7 @@
 #! /usr/bin/env node
 
+// imports
 const fs = require('fs');
-
-// we get the arguments passed in the command line
-const userArgs = process.argv.slice(2);
-
 const Store = require('./models/store');
 const User = require('./models/user');
 const Music = require('./models/music');
@@ -13,39 +10,57 @@ const Product = require('./models/product');
 const Video = require('./models/video');
 const Tag = require('./models/tags');
 
+// we get the arguments passed in the command line
+const userArgs = process.argv.slice(2);
+
 const users = [];
 const stores = [];
 const musics = [];
 
+// intializing database connection to MongoDB
+// via the mongoose ODM
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 const mongoDB = userArgs[0];
-
 main().catch((err) => console.log(err));
 
+// a simple main function that generates and adds sample data
+// to the MongoDB database
 async function main() {
   console.log("Debug: About to connect");
   await mongoose.connect(mongoDB);
   console.log("Debug: Should be connected?");
-  await createStores();
-  await createUser();
-  await createMusic();
-  await createVariants();
-  await createTags();
-  await createProducts();
+//   await createStores();
+//   await createUser();
+//   await createMusic();
+//   await createVariants();
+//   await createTags();
+//   await createProducts();
+  await createVideos();
   console.log("Debug: Closing mongoose");
   mongoose.connection.close();
 }
 
-
+// helper functions to create sample data for the 'Stores' collections
 async function storeCreate(index, name, url) {
-  const store = new Store({ _id: index + 1, name: name, logo_url: url });
-  await store.save();
-  stores[index] = store;
-  console.log(`Added Store: ${name}`);
+    const store = new Store({ _id: index + 1, name: name, logo_url: url });
+    await store.save();
+    stores[index] = store;
+    console.log(`Added Store: ${name}`);
 }
 
+async function createStores() {
+  console.log("Adding Stores");
+
+  for (let i = 0; i < 20; i++){
+      await Promise.all([
+        storeCreate(i, `Store_${i}`, `https://example.com/Store_${i}`),
+      ]);
+  }
+}
+
+// helper functions to create sample data for the 'Users' collections
 async function userCreate(index, obj) {
     const user = new User({ 
         _id: index + 1,
@@ -60,31 +75,6 @@ async function userCreate(index, obj) {
     await user.save();
     users[index] = user;
     console.log(`Added User: ${obj.username}`);
-  }
-
-  async function musicCreate(index, obj) {
-    const music = new Music({ 
-        _id: index + 1,
-        name: obj.name,
-        artist: obj.artist,
-        cover_url: obj.cover_url
-    });
-
-    await music.save();
-    musics[index] = music;  
-    console.log(`Added Music: ${obj.name} by ${obj.artist}`);
-}
-
-
-
-async function createStores() {
-  console.log("Adding Stores");
-
-  for (let i = 0; i < 20; i++){
-      await Promise.all([
-        storeCreate(i, `Store_${i}`, `https://example.com/Store_${i}`),
-      ]);
-  }
 }
 
 async function createUser(){
@@ -105,6 +95,20 @@ async function createUser(){
 
 }
 
+// helper functions to create sample data for the 'Music' collections
+async function musicCreate(index, obj) {
+    const music = new Music({ 
+        _id: index + 1,
+        name: obj.name,
+        artist: obj.artist,
+        cover_url: obj.cover_url
+    });
+
+    await music.save();
+    musics[index] = music;  
+    console.log(`Added Music: ${obj.name} by ${obj.artist}`);
+}
+
 async function createMusic() {
     console.log("Adding Music Records");
 
@@ -121,38 +125,8 @@ async function createMusic() {
     }
 }
 
-async function createVariants() {
-    console.log("Adding Variants");
 
-    const variantsData = [
-        {
-            _id: 101,
-            name: "Size",
-            options: ["S", "M", "L", "XL"]
-        },
-        {
-            _id: 102,
-            name: "Color",
-            options: ["Red", "Blue", "Green"]
-        }
-    ];
-
-    for (let i = 0; i < variantsData.length; i++) {
-        const variantObj = variantsData[i];
-
-        const variant = new Variant({
-            _id: variantObj._id,
-            name: variantObj.name,
-            options: variantObj.options
-        });
-
-        await variant.save();
-        console.log(`Added Variant: ${variantObj.name}`);
-    }
-}
-
-
-
+// helper functions to create sample data for the 'Products' collections
 async function createProducts() {
     console.log("Adding Products");
 
@@ -204,18 +178,78 @@ async function productCreate(productObj) {
     console.log(`Added Product: ${productObj.name}`);
 }
 
+
+// helper functions to create sample data for the 'Variants' collections
+async function createVariants() {
+    console.log("Adding Variants");
+
+    const variantsData = [
+        {
+            _id: 101,
+            name: "Size",
+            options: ["S", "M", "L", "XL"]
+        },
+        {
+            _id: 102,
+            name: "Color",
+            options: ["Red", "Blue", "Green"]
+        }
+    ];
+
+    for (let i = 0; i < variantsData.length; i++) {
+        const variantObj = variantsData[i];
+
+        const variant = new Variant({
+            _id: variantObj._id,
+            name: variantObj.name,
+            options: variantObj.options
+        });
+
+        await variant.save();
+        console.log(`Added Variant: ${variantObj.name}`);
+    }
+}
+
+// helper functions to create sample data for the 'Tags' collections
+async function createTags() {
+    console.log("Adding Tags");
+
+    for (let i = 0; i < 20; i++) {
+        const tagObj = {
+            _id: i + 1, 
+            name: `Tag_${i + 1}`
+        };
+
+        await tagCreate(tagObj);
+    }
+}
+
+async function tagCreate(tagObj) {
+    const tag = new Tag({
+        _id: tagObj._id,
+        name: tagObj.name
+    });
+
+    await tag.save();
+    console.log(`Added Tag: ${tagObj.name}`);
+}
+
+
+// helper functions to create sample data for the 'Videos' collections
 async function createVideos() {
     console.log("Adding Videos");
 
     const users = await User.find({});
     const products = await Product.find({});
     const music = await Music.find({});
-    const tags = await Tags.find({});
+    const tags = await Tag.find({});
 
 
     for (let i = 0; i < 20; i++) {
+
         const randomUser = users[Math.floor(Math.random() * users.length)];
         const randomMusic = music[Math.floor(Math.random() * music.length)];
+
         const randomProducts = [
             products[Math.floor(Math.random() * products.length)]._id, 
             products[Math.floor(Math.random() * products.length)]._id  
@@ -240,7 +274,7 @@ async function createVideos() {
             is_liked: Math.random() > 0.5,
             is_bookmarked: Math.random() > 0.5, 
             music: randomMusic._id,
-            hashtags: [`#hashtag_${i + 1}`, `#tag_${Math.floor(Math.random() * 10)}`] 
+            hashtags: randomTags 
         };
 
         await Promise.all([
@@ -271,28 +305,3 @@ async function videoCreate(videoObj) {
     await video.save();
     console.log(`Added Video: ${videoObj.video_url}`);
 }
-
-async function createTags() {
-    console.log("Adding Tags");
-
-    for (let i = 0; i < 20; i++) {
-        const tagObj = {
-            _id: i + 1, 
-            name: `Tag_${i + 1}`
-        };
-
-        await tagCreate(i, tagObj);
-    }
-}
-
-async function tagCreate(index, tagObj) {
-    const tag = new Tag({
-        _id: tagObj._id,
-        name: tagObj.name
-    });
-
-    await tag.save();
-    console.log(`Added Tag: ${tagObj.name}`);
-}
-
-
