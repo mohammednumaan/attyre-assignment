@@ -101,6 +101,8 @@ Finally, the endpoint would also return a **pagination** object which will help 
 
 This assignment solution makes use of the popular **NoSQL** database, `MongoDB`.
 
+> The database can be populated with sample data by running the populateDatabase.js script (More details can be found at the end of this documentation).
+
 ### Why MongoDB?
 
 The reason I chose MongoDB is because of three major reasons:
@@ -411,3 +413,60 @@ Here are some of my additional thoughts and ideas:
 
 - **Loadbalancing** can be used to improve the performance drastically in high traffic environments. This is because, the trafic and load is distributed over a number of servers which can help reduce server load.
 
+# How To Run
+
+**Clone the repository:**
+
+```bash
+git clone https://github.com/username/project-name.git
+```
+
+**Install Dependencies**
+
+```bash
+npm install
+```
+
+**Set up the .env file:**
+
+```
+MONGO_URL="mongodb://localhost:27017/attyre_dev"
+```
+
+**Run the script to populate the database:**
+```bash
+node populateDatabase.js mongodb://localhost:27017/attyre_dev
+```
+
+**Run the application:**
+
+To run the application there are two ways:
+
+- With clusters implemented:
+```bash
+nodemon cluster.js
+```
+
+- Without clusters implemented:
+```bash
+nodemon npm run start
+```
+
+**Test Performance**
+
+You can test the API through **Postman** (or) through **cURL**.
+
+```bash
+# curl example
+curl -X GET http://localhost:3000/api/homescreen
+```
+
+To simulate traffic and concurrent request:
+```bash
+npx loadtest -n 1000 -c 10 http://localhost:3000/api/homescreen
+```
+
+> -n indicates number of users and -c indicates number of concurrent requests.
+
+
+> Built & Designed by Mohammed Numaan
