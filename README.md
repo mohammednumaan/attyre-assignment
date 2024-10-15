@@ -305,7 +305,7 @@ The above data is a contracted version of the actual returned data. The endpoint
 
 The retrieval of data from the database is straightforward. Using the **Mongoose ODM**, we perform a `find` method invokationi which will query the underlying database and fetch us the results. (A snippet of the code is shown below)
 
-![Mongoose Find](Mongoose_Find.png)
+![Mongoose Find](./documentation_assets/Mongoose_Find.png)
 
 > The `populate` method **populates** the fields which refer to a different document in a different collection by populating the actual values of that related document in the final result.
 
