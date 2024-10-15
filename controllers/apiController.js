@@ -12,7 +12,7 @@ const Variant = require("../models/variant");
 // this helps us to reduce the repetition of try-catch blocks making the code more readable
 exports.homescreen_get = asyncHandler(async (req, res, next) => {
 
-    // validating the query parameters to ensure
+    // validating the query parameters to ensure valid query parameters are being passed
     const allowedParams = ['cursor', 'limit']
     const invalidParams = Object.keys(req.query).filter(param => !allowedParams.includes(param));
 

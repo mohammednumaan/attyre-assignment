@@ -22,7 +22,7 @@ const apiRouter = require('./routes/api');
 const app = express();
 
 // create a connection to the MongoDB database
-// via the Mongoose ORM
+// via the Mongoose ODM
 mongoose.set("strictQuery", false);
 const mongoDB = process.env.MONGO_URL;
 

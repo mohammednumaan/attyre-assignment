@@ -9,7 +9,7 @@ The following technologies have been used for this assignment:
 - ExpressJS
 - MongoDB
 
-
+The source files can be found in the repository. (Additonally, comments have been added for better code clarity and readability)
 
 # API Contract
 
@@ -124,13 +124,13 @@ From the given sample **API Contract**, I concluded that there were the followin
 
 #### Video Collection
 
-- Each **Video Document** has a relation with the *Product Document*, the *User Document*, the *Music Document* and the *Tag Document* ([View Details For The Tag Scehma]()).
+- Each **Video Document** has a relation with the *Product Document*, the *User Document*, the *Music Document* and the *Tag Document* ([View Details For The Tag Scehma](#more-about-the-tag-schema)).
 
 #### Product Collection
 
 - Each **Product Document** has a relation with a *Store Document* and a collection of *Variants Documents*.
 
-#### More About The Tag Schema
+# More About The Tag Schema
 
 - In the given sample **API Contract**, there appears to be no seperate relation/collection for the *Tags* (hashtags). Different videos might have different tags. Different video documents can also **refer** to the same tag. To avoid repetition in providing an array of strings each time, for each **video document**, I decided to write a seperate **Collection** for the tags.
 
@@ -157,7 +157,7 @@ The design and implementation of the **Homescreen API** was straight forward. Th
 
 Additionally, I have implemented **Router Objects** to manage and handle requests from similar routes. The **Router Object** are placed in separate folders as well (`routes`). The creation of **Router** objects ensures *seperation of concerns* and modularity. Moreoever, having router objects will help in easy maintenance and scalability when the application evolves to include more complex routes.
 
-Here, I have defined an `/api` prefix route which will handle routes related to the API, in this case, the **homescreen** api. This is added to the middleware chain which can be found [here]().
+Here, I have defined an `/api` prefix route which will handle routes related to the API, in this case, the **homescreen** api. This is added to the middleware chain which can be found [here](https://github.com/mohammednumaan/attyre-assignment/blob/main/app.js#L52).
 
 > This API implemetation primarily uses the **GET** HTTP method. This is because, the assignment only requires us to **fetch/retrieve** data from the server to use in the front-end (client-side).
 
