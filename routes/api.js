@@ -16,8 +16,10 @@ const router = express.Router();
 let cache = apicache.middleware
 
 // a simple get end-point to retrieve the required 'video' data from the database
-router.get('/homescreen', cache('5 minutes'), async function(req, res, next) {
-    const video = await Video.findOne()
+// we also cache that result to avoid unneccessary server load while
+// requesting the same set of data
+router.get('/homescreen', cache('1 day'), async function(req, res, next) {
+    const video = await Video.find()
     .populate({ path: 'user', model: User}) 
     .populate({ path: 'music', model: Music}) 
     .populate({ path: 'hashtags', model: Tag}) 

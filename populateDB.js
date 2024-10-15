@@ -16,6 +16,7 @@ const userArgs = process.argv.slice(2);
 const users = [];
 const stores = [];
 const musics = [];
+const TOTAL_VALUE = 300;
 
 // intializing database connection to MongoDB
 // via the mongoose ODM
@@ -31,15 +32,29 @@ async function main() {
   console.log("Debug: About to connect");
   await mongoose.connect(mongoDB);
   console.log("Debug: Should be connected?");
-//   await createStores();
-//   await createUser();
-//   await createMusic();
-//   await createVariants();
-//   await createTags();
-//   await createProducts();
+  await deleteDocuments();
+  await createStores();
+  await createUser();
+  await createMusic();
+  await createVariants();
+  await createTags();
+  await createProducts();
   await createVideos();
   console.log("Debug: Closing mongoose");
   mongoose.connection.close();
+}
+
+// a simple function to remove/delete documents from
+// each collection when re-running the script to 
+// avoid duplicates and redundant data
+async function deleteDocuments(){
+    await User.deleteMany();
+    await Store.deleteMany();
+    await Variant.deleteMany();
+    await Product.deleteMany();
+    await Tag.deleteMany();
+    await Music.deleteMany();
+    await Video.deleteMany();
 }
 
 // helper functions to create sample data for the 'Stores' collections
@@ -53,7 +68,7 @@ async function storeCreate(index, name, url) {
 async function createStores() {
   console.log("Adding Stores");
 
-  for (let i = 0; i < 20; i++){
+  for (let i = 0; i < TOTAL_VALUE; i++){
       await Promise.all([
         storeCreate(i, `Store_${i}`, `https://example.com/Store_${i}`),
       ]);
@@ -79,7 +94,7 @@ async function userCreate(index, obj) {
 
 async function createUser(){
     console.log("Adding Users");
-    for (let i = 0; i < 20; i++){
+    for (let i = 0; i < TOTAL_VALUE; i++){
 
         const obj = {
             username: `User_${i + 1}`, 
@@ -112,7 +127,7 @@ async function musicCreate(index, obj) {
 async function createMusic() {
     console.log("Adding Music Records");
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < TOTAL_VALUE; i++) {
         const musicObj = {
             _id: i + 1, 
             name: `Song_${i + 1}`,
@@ -132,7 +147,7 @@ async function createProducts() {
 
     const variants = await Variant.find();
     
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < TOTAL_VALUE; i++) {
         const stores = await Store.find({_id: i + 1});
         const randomVariants = [
             variants[0]._id, 
@@ -214,7 +229,7 @@ async function createVariants() {
 async function createTags() {
     console.log("Adding Tags");
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < TOTAL_VALUE; i++) {
         const tagObj = {
             _id: i + 1, 
             name: `Tag_${i + 1}`
@@ -245,7 +260,7 @@ async function createVideos() {
     const tags = await Tag.find({});
 
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < TOTAL_VALUE; i++) {
 
         const randomUser = users[Math.floor(Math.random() * users.length)];
         const randomMusic = music[Math.floor(Math.random() * music.length)];
