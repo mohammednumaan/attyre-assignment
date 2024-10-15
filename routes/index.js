@@ -5,9 +5,9 @@ const express = require('express');
 // simila routes in the application
 const router = express.Router();
 
-// a simple get endpoint to render the index route
+// a simple get endpoint to access the index route
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.send('Attyre Assignment Demo.');
 });
 
 module.exports = router;

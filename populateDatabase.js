@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+// this is a simple script that generates and adds sample data to the MongoDB database
 
 // imports
 const fs = require('fs');
@@ -12,10 +13,6 @@ const Tag = require('./models/tags');
 
 // we get the arguments passed in the command line
 const userArgs = process.argv.slice(2);
-
-const users = [];
-const stores = [];
-const musics = [];
 const TOTAL_VALUE = 300;
 
 // intializing database connection to MongoDB
@@ -61,7 +58,6 @@ async function deleteDocuments(){
 async function storeCreate(index, name, url) {
     const store = new Store({ _id: index + 1, name: name, logo_url: url });
     await store.save();
-    stores[index] = store;
     console.log(`Added Store: ${name}`);
 }
 
@@ -88,7 +84,6 @@ async function userCreate(index, obj) {
     });
 
     await user.save();
-    users[index] = user;
     console.log(`Added User: ${obj.username}`);
 }
 
@@ -120,7 +115,6 @@ async function musicCreate(index, obj) {
     });
 
     await music.save();
-    musics[index] = music;  
     console.log(`Added Music: ${obj.name} by ${obj.artist}`);
 }
 

@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+// imports
+const express = require('express');
 
-/* GET users listing. */
+// initializing a router object to handle
+// similar routes (user routes)
+const router = express.Router();
+
+// a simple get endpoint to access the /user/ route
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('Demo User Route.');
 });
 
 module.exports = router;
