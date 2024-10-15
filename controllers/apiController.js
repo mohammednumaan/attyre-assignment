@@ -24,9 +24,8 @@ exports.homescreen_get = asyncHandler(async (req, res, next) => {
     // retrieve the cursor's value and the limit
     const {cursor = null, limit = 10} = req.query;
 
-    // compute the limit and the current page number
+    // compute the limit
     const currentLimit = parseInt(limit);
-    const currentPage = (cursor) ? parseInt(cursor) / limit : 1
     
     // build a simple query which will be passed to the 
     // find query to retrieve the documents
@@ -50,9 +49,11 @@ exports.homescreen_get = asyncHandler(async (req, res, next) => {
     // this value will be used in future requests
     const nextCursor = videos.length === currentLimit ? videos[videos.length - 1]._id : null;
 
-    // compute the total page and video counts
+    // compute the total page and video counts and the current page
     const videosCount = await Video.countDocuments();
     const pagesCount = Math.ceil(videosCount / currentLimit);
+    const currentPage = (cursor) ? Math.floor(((cursor) / limit)) + 1 : 1
+
 
     // finally, we send a json response with
     // the neccessary data (videos and pagination data)
