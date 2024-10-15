@@ -6,9 +6,11 @@ require("dotenv").config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require("mongoose");
+
 const compression = require('compression')
 
 // router imports
@@ -57,12 +59,11 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  const error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // send the error message
   res.status(err.status || 500);
-  res.render('error');
+  res.json(err);
 });
 
 module.exports = app;

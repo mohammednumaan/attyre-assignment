@@ -12,8 +12,17 @@ const Variant = require("../models/variant");
 // this helps us to reduce the repetition of try-catch blocks making the code more readable
 exports.homescreen_get = asyncHandler(async (req, res, next) => {
 
+    // validating the query parameters to ensure
+    const allowedParams = ['cursor', 'limit']
+    const invalidParams = Object.keys(req.query).filter(param => !allowedParams.includes(param));
+
+    // checks if there are any invalid query parameters, if it does exist
+    // we respond with a 400 status error
+    if (invalidParams.length > 0) {
+        return res.status(400).json({ error: `Invalid query parameters: ${invalidParams.join(', ')}` });
+    }
     // retrieve the cursor's value and the limit
-    const {cursor = null, limit = 10, page} = req.query;
+    const {cursor = null, limit = 10} = req.query;
 
     // compute the limit and the current page number
     const currentLimit = parseInt(limit);

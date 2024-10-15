@@ -11,8 +11,8 @@ const router = express.Router();
 let cache = apicache.middleware
 
 // a simple get end-point to retrieve the required 'video' data from the database
-// we also cache that result to avoid unneccessary server load while
-// requesting the same set of data
+// we also cache that result to avoid unneccessary and repeated database queries
+// while requesting the same set of data
 router.get('/homescreen', cache('1 day'), apiController.homescreen_get);
 
 module.exports = router;
