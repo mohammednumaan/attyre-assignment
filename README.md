@@ -330,10 +330,10 @@ To address performance and scalability issues, I have implemented several featur
 When delivering a large dataset to the client, it may take large amounts of memory to store and deliver the data. To address this issue, I have implemented `gzip` compression. This basically, compresses `HTTP` responses to smaller files which can be easily stored and delivered. Thereby, decreasing memory usage.
 
 **Without Compression**
-- [Without Compression Demo](./documentation_assets/without_compression.mp4)
+- [Without Compression Demo](https://drive.google.com/file/d/1lFCbiiwsMhzfzhwEG8jxvnJQch_YXU4R/view?usp=drive_link)
 
 **With Compression**
-- [With Compression Demo](./documentation_assets/with_compression.mp4)
+- [With Compression Demo](https://drive.google.com/file/d/1c9sTuq0TU3NfQU3EnbQUG4Gkx1eLCYrr/view?usp=drive_link)
 
 As we can see, without compression, the memory consumption is arount **14**kbs. With compression, the memory consumption is around **2-3**kbs. It decreases memory consumption by almost **7x** times
 
@@ -345,11 +345,11 @@ This technique, caches/stores the retrieved data in-memory. When a request to th
 
 **Without Caching**
 
-- [Without Cache Demo](./documentation_assets/without_cache.mp4)
+- [Without Cache Demo](https://drive.google.com/file/d/14u3MZPSWYH-XeU4nPmqtUOqAihRdqXDY/view?usp=drive_link)
 
 **With Caching**
 
-- [With Cache Demo](./documentation_assets/with_cache.mp4)
+- [With Cache Demo](https://drive.google.com/file/d/1n_iU_CY5r4VUPlPMdE3NM0YT1GNELuAV/view?usp=drive_link)
 
 From the above demo we can clearly observe that the initial time taken is about **30-40**ms. Re-requesting the same resource we see the time taken drops to about **3-4**ms. A **10x** drop in time-taken to deliver the data!
 
@@ -395,11 +395,11 @@ Here is a simple diagram illustrating Clustering:
 
 **Without Clusters**
 
-- [Without Clusters](./documentation_assets/without_clusters.mp4)
+- [Without Clusters](https://drive.google.com/file/d/1JkP3AXOqdwSN0n1RgtuYT907Xl06js_x/view?usp=drive_link)
 
 **With Clusters**
 
-- [With Clusters](./documentation_assets/with_clusters.mp4)
+- [With Clusters](https://drive.google.com/file/d/1cFQ3iQfe8907j-CYYvQpeFEkAq2YcJLO/view?usp=drive_link)
 
 From the above demo video, we can observe that, the total time dropped from around `5 seconds` (without clusters) to around `3 seconds` initially. On further requests, the data gets cached. This reduces the server load. In the demo without clusters, the time taken after caching is around `1 second` and `0.5 milliseconds` with clusters. These performance boosts will help the back-end server be more performant and scalable.
 
