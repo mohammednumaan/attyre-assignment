@@ -115,7 +115,7 @@ The reason I chose MongoDB is because of three major reasons:
 
 ### Writing The Schema
 
-To write the database schema, I utilized the **Mongoose ODM**. mongoose is a popular *Object Document Mapper* to help 
+To write the database schema, I utilized the **Mongoose ODM**. mongoose is a popular *Object Document Mapper* to help facilitate database tasks easily.
 
 For the most part, writing the schema was straightforward from the sample **API Contract** given.
 Relevant data-types were given for different fields for different *document* schemas. For example the `createdAt` field in the **video.js** schema had a *Date* type.
