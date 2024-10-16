@@ -434,7 +434,7 @@ Here are some of my additional thoughts and ideas:
 
 - Using **Redis** instead of the `node apicache module` for caching. **Redis** is fast and reliable. 
 
-- **Loadbalancing** can be used to improve the performance drastically in high traffic environments. This is because, the trafic and load is distributed over a number of servers which can help reduce server load.
+- **Loadbalancing** can be used to improve the performance drastically in high traffic environments. This is because, the traffic and load is distributed over a number of servers which can help reduce server load.
 
 # How To Run
 
