@@ -339,13 +339,13 @@ The implementation was done using the `express-rate-limit` middleware package. T
 
 ![Rate_Limit_Code](./documentation_assets/rate_limit.png)
 
-Setting a limit of `100` will send the client a response with status code `429` (to many requests). The following attachment demonstrates it:
+Setting a limit of `100` will send the client a response with status code `429` (to0 many requests). The following attachment demonstrates it:
 
-![Rate_Limit_100](./documentation_assets/rate_limit_600.png)
+![Rate_Limit_600](./documentation_assets/rate_limit_100.png)
 
 Similarly, setting the limit to a higher value, will process more requests (this depends on the server configuration). The following attachment demonstrates it:
 
-![Rate_Limit_600](image-2.png)
+![Rate_Limit_100](./documentation_assets/rate_limit_600.png)
 
 
 ## Compression
