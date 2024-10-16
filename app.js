@@ -12,6 +12,7 @@ const logger = require('morgan');
 const mongoose = require("mongoose");
 
 const compression = require('compression')
+const RateLimit = require("express-rate-limit");
 
 // router imports
 const indexRouter = require('./routes/index');
@@ -31,6 +32,15 @@ async function main(){
   await mongoose.connect(mongoDB);
 }
 
+// the limit value can be changed depending upon the 
+// application requirements
+const limiter = RateLimit({
+  windowMs: 15 * 60 * 1000, 
+	limit: 600,
+	standardHeaders: 'draft-7',
+	legacyHeaders: false, 
+});
+
 // view engine setup (this can be ignored for this assignment)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -44,6 +54,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // adds the gzip compression middleware to the middleware chain
 // to reduce the size of the 'response' by compressing it
 app.use(compression())
+
+// aadding the rate-limiter middleware to the middleware
+app.use(limiter)
 
 // adds the imported router objects to the middleware chain
 // to handle matching routes

@@ -319,6 +319,8 @@ However, this is not completely suitable for high traffic and server load. The f
 
 To address performance and scalability issues, I have implemented several features to optimize the API endpoint, they are given as follows:
 
+- Rate Limiting
+
 - Response Compression
 
 - Caching (In-Memory Caching)
@@ -327,9 +329,28 @@ To address performance and scalability issues, I have implemented several featur
 
 - Clusters (Similar to Loadbalancing)
 
+## Rate Limiting
+
+In high traffic environments, restricting the amount of requests a client sends is crucial. To address this issue, I have implemented a basic **Rate Limiter**.
+
+The rate limiter as of now only allows 100 requests as a limit but can be easily modified as per application requirements. Using a rate limiter will help manage high traffic and unnecessary server load.
+
+The implementation was done using the `express-rate-limit` middleware package. The source can be found [here](https://github.com/mohammednumaan/attyre-assignment/blob/main/app.js#L37).
+
+![Rate_Limit_Code](./documentation_assets/rate_limit.png)
+
+Setting a limit of `100` will send the client a response with status code `429` (to many requests). The following attachment demonstrates it:
+
+![Rate_Limit_100](./documentation_assets/rate_limit_600.png)
+
+Similarly, setting the limit to a higher value, will process more requests (this depends on the server configuration). The following attachment demonstrates it:
+
+![Rate_Limit_600](image-2.png)
+
+
 ## Compression
 
-When delivering a large dataset to the client, it may take large amounts of memory to store and deliver the data. To address this issue, I have implemented `gzip` compression. This basically, compresses `HTTP` responses to smaller files which can be easily stored and delivered. Thereby, decreasing memory usage.
+When delivering a large dataset to the client, it may take large amounts of memory to store and deliver the data. To address this issue, I have implemented `gzip` compression (via the `compression` package). This basically, compresses `HTTP` responses to smaller files which can be easily stored and delivered. Thereby, decreasing memory usage.
 
 **Without Compression**
 - [Without Compression Demo](https://drive.google.com/file/d/1lFCbiiwsMhzfzhwEG8jxvnJQch_YXU4R/view?usp=drive_link)
@@ -341,7 +362,7 @@ As we can see, without compression, the memory consumption is arount **14**kbs. 
 
 ## Caching
 
-It is not performant to re-fetch the data everytime we request a resource on the **same** endpoint. To address this I have implemented an `in-memory` caching mechanism via the `apicache` NodeJS module.
+It is not performant to re-fetch the data everytime we request a resource on the **same** endpoint. To address this I have implemented an `in-memory` caching mechanism via the `apicache` package  .
 
 This technique, caches/stores the retrieved data in-memory. When a request to the same endpoint and resource is made, the server will serve the cached data, this reduces database and server loads because, the data is **not re-fetched** from the database.
 
@@ -392,6 +413,8 @@ Here is a simple diagram illustrating Clustering:
 
 
 > It is to be noted that, load balancing is a better option to handle large amounts of traffic rather than clustering.
+
+> Clustering was implemented using the cluster package.
 
 **Clustering Demo**
 
